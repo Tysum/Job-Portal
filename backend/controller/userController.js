@@ -1,6 +1,7 @@
 import { User } from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { generateToken } from "../config/accessToken";
 
 export const register = async (res, req, next) => {
   try {
@@ -63,13 +64,16 @@ export const login = async (req, res, next) => {
         .json({ message: "Account does not exist with current role" });
     }
 
-    const tokenData = { userId: user._id };
-    const token = jwt.sign(tokenData, process.env.JWT_SECRET, {
-      expiresIn: "10d",
-    });
+    const refreshToken = generateToken(user._id);
+    const updatedUser = await User.updateAndUpdate(
+      user.id,
+      { refreshToken: refreshToken },
+      { new: true }
+    );
+
     return res
       .status(200)
-      .cookies("token", token, {
+      .cookies("refreshToken", refreshToken, {
         maxAge: 10 * 24 * 60 * 60 * 1000,
         httpsOnly: true,
         sameSite: "strict",
