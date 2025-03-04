@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import dbConnection from "./utils/databaseConnection.js";
+import userRoutes from "./routes/userRoutes.js";
 
 dotenv.config({});
 
@@ -18,6 +19,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+app.use("/api/v1/users", userRoutes);
 app.listen(PORT, function () {
   dbConnection();
   console.log(`Server listening on port ${PORT}`);
