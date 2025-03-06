@@ -1,6 +1,12 @@
 import express from "express";
-import { register } from "../controller/userController";
-import { isAuthenticated } from "../middleware/authMiddleware";
+import {
+  register,
+  login,
+  logout,
+  updateProfile,
+} from "../controller/userController.js"; // ✅ Ensure '.js' is present
+
+import { isAuthenticated } from "../middleware/authMiddleware.js"; // Ensure .js extension
 
 const router = express.Router();
 
