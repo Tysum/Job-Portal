@@ -63,3 +63,51 @@ export const getCompany = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getCompanyById = async (req, res, next) => {
+  try {
+    const { id } = req.params.id;
+    const company = await Company.findById(id);
+    if (!company) {
+      return res
+        .status(404)
+        .json({ message: "Company not found", success: false });
+    }
+    return res.status(200).json({
+      message: "Company fetched successfully",
+      success: true,
+      company: company,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateCompany = async (req, res, next) => {
+  try {
+    const { id } = req.params.id;
+    const { name, description, website, location, logo } = req.body;
+    const file = req.file;
+
+    // cloudinary implementation
+
+    const company = await Company.findByIdAndUpdate(
+      id,
+      { name, description, website, location, logo },
+      { new: true }
+    );
+
+    if (!company) {
+      return res
+        .status(404)
+        .json({ message: "Company not found", success: false });
+    }
+    return res.status(200).json({
+      message: "Company updated successfully",
+      success: true,
+      company: company,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
