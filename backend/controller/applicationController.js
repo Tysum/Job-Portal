@@ -1,7 +1,7 @@
 import { Application } from "../models/application.js";
 import { Job } from "../models/job.js";
 
-export const aaplyJob = async (req, res, next) => {
+export const applyJobs = async (req, res, next) => {
   try {
     const { userId } = req.user;
     const { jobId } = req.params.id;
