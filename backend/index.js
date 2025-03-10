@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import dbConnection from "./utils/databaseConnection.js";
 import userRoutes from "./routes/userRoutes.js";
 import companyRoutes from "./routes/companyRoutes.js";
+import jobRoutes from "./routes/jobRoutes.js";
+import applicationRoutes from "./routes/applicationRoutes.js";
 
 dotenv.config({});
 
@@ -22,6 +24,8 @@ app.use(cors(corsOptions));
 
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/company", companyRoutes);
+app.use("/api/v1/job", jobRoutes);
+app.use("/api/v1/application", applicationRoutes);
 
 app.listen(PORT, function () {
   dbConnection();
